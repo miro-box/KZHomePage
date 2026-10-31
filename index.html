@@ -249,10 +249,12 @@
                 justify-content: center;
             }
 
-            /* 手机端改用专属竖图 bg-m.webp，居中对齐即可完美呈现 */
+            /* 📱 手机端背景图定位：将垂直百分比调大（如 80%），把图片向上推 */
             body::before {
                 background-image: url("./static/images/bg-m.webp");
-                background-position: center top; /* 顶端居中对齐，确保脸部完全露出 */
+                background-size: 135%;
+                background-position: center 100%; /* 垂直方向调大到 80%~90%，图片会明显向上移 */
+                background-repeat: no-repeat;
             }
 
             body::after {
