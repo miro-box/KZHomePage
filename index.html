@@ -241,8 +241,7 @@
                 transition: none;
             }
         }
-
-/* 手机：卡片沉到底部居中，把画面上半部分（人物）让出来 */
+/* 手机：卡片沉到底部居中，使用手机专属竖图 */
         @media (max-width: 700px) {
             body {
                 padding: 16px;
@@ -250,17 +249,10 @@
                 justify-content: center;
             }
 
-/* 手机：卡片沉到底部居中，把画面上半部分（人物）让出来 */
-        @media (max-width: 700px) {
-            body {
-                padding: 16px;
-                align-items: flex-end;
-                justify-content: center;
-            }
-
-            /* 手机端背景图往上移：将第二个百分比继续调大（例如 85% 或 90%） */
+            /* 手机端改用专属竖图 bg-m.webp，居中对齐即可完美呈现 */
             body::before {
-                background-position: 62% 88%; 
+                background-image: url("./static/images/bg-m.webp");
+                background-position: center top; /* 顶端居中对齐，确保脸部完全露出 */
             }
 
             body::after {
