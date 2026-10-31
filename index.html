@@ -85,7 +85,7 @@
             background: var(--body-bg);
         }
 
-        /* 背景图：请换成你自己的图，建议 WebP，宽 1920 以内，200 KB 以内。 */
+        /* 电脑端背景图定位 */
         body::before {
             content: "";
             position: fixed;
@@ -242,12 +242,25 @@
             }
         }
 
-        /* 手机：卡片沉到底部居中，把画面上半部分（人物）让出来 */
+/* 手机：卡片沉到底部居中，把画面上半部分（人物）让出来 */
         @media (max-width: 700px) {
             body {
                 padding: 16px;
                 align-items: flex-end;
                 justify-content: center;
+            }
+
+/* 手机：卡片沉到底部居中，把画面上半部分（人物）让出来 */
+        @media (max-width: 700px) {
+            body {
+                padding: 16px;
+                align-items: flex-end;
+                justify-content: center;
+            }
+
+            /* 手机端背景图往上移：将第二个百分比继续调大（例如 85% 或 90%） */
+            body::before {
+                background-position: 62% 88%; 
             }
 
             body::after {
@@ -269,7 +282,6 @@
                 flex-basis: 100%;
             }
         }
-
         /* === 页面加载动画样式 === */
         #loading-mask {
             position: fixed;
