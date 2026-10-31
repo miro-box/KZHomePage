@@ -1,133 +1,414 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="zh-CN">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- 浏览器标签上显示的网站标题 -->
-    <title>月色真美,风也温柔</title>
-    <!-- 网站介绍 -->
-    <meta name="description" content="KZHomePage是一款二次元卡片式个人网站主页模板">
-    <!-- 网站关键字 -->
-    <meta name="keywords" content="风也温柔,个人主页,程序员">
-    <!-- 浏览器标签上显示的图标 -->
-    <link rel="icon" type="image/ico" href="//sdn.geekzu.org/avatar/4cc893d113dd74ceca73f9863f2c5446/">
-    <!-- 样式文件 -->
-    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css">
-    <link rel="stylesheet" href="./static/style.css?v=1.2.0">
-    <link rel="stylesheet" href="./static/APlayer-1.10.1/dist/APlayer.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>昭鸢笺</title>
+    <meta name="description" content="昭鸢笺的个人主页：技术调试的点滴、零散思绪与沿途所见。">
+    <meta name="keywords" content="昭鸢笺,个人主页,博客,技术,galgame,番剧">
+    <meta name="theme-color" content="#3d5a80">
+    <meta name="color-scheme" content="light dark">
 
-    <!-- 自定义设置 -->
+    <!-- 分享链接时的预览卡片（微信、Telegram、X 等）。主页域名不是 mibase.top 的话请改这几处 -->
+    <link rel="canonical" href="https://mibase.top/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="昭鸢笺">
+    <meta property="og:description" content="鸢起云间，一纸笺藏见闻。">
+    <meta property="og:url" content="https://mibase.top/">
+    <meta property="og:image" content="https://mibase.top/static/images/bg.webp">
+
+    <!-- 浏览器标签上显示的图标：请换成你自己的图片 -->
+    <link rel="icon" href="./static/images/favicon.png">
+    <!-- 背景图是首屏最大的元素，提前加载 -->
+    <link rel="preload" as="image" href="./static/images/bg.webp" fetchpriority="high">
+
+    <!-- 字体：直接使用博客站点上的同一套文件，和博客保持一致（需要博客的 /fonts/ 允许跨域，见 _headers） -->
+    <link rel="preconnect" href="https://blog.mibase.top" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" crossorigin
+        href="https://blog.mibase.top/fonts/HarmonyOS-Sans-sub.woff2">
+    <!-- 正文字体（霞鹜文楷，按需加载的切片版）：异步加载，不阻塞首屏 -->
+    <link rel="preload" href="https://blog.mibase.top/fonts/lxgw/lxgwwenkai-regular.css" as="style"
+        onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="https://blog.mibase.top/fonts/lxgw/lxgwwenkai-regular.css">
+    </noscript>
+
     <style>
+        /* 标题和按钮：HarmonyOS Sans（精简版，和博客标题字体相同） */
+        @font-face {
+            font-family: 'HarmonyOS Sans';
+            src: url('https://blog.mibase.top/fonts/HarmonyOS-Sans-sub.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        :root {
+            --font-modern: "HarmonyOS Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", Roboto, sans-serif;
+            --font-literary: "LXGW WenKai", "Songti SC", "Noto Serif SC", serif;
+
+            --accent: #3d5a80;
+            --text: #1f2937;
+            --muted: #4b5563;
+            --card: rgba(255, 255, 255, 0.76);
+            --card-border: rgba(255, 255, 255, 0.6);
+            --btn-text: #ffffff;
+            --body-bg: #cfd8e3; /* 浅色模式背景 */
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --accent: #8fb3e0;
+                --text: #f3f4f6;
+                --muted: #cbd5e1;
+                --card: rgba(17, 24, 39, 0.66);
+                --card-border: rgba(255, 255, 255, 0.14);
+                --btn-text: #0b1220;
+                --body-bg: #0f172a; /* 深色模式背景，防止白屏闪烁 */
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            /*背景图片URL 可使用随机图片API */
-            background-image: url("./static/images/bg.jpeg");
+            margin: 0;
+            min-height: 100vh;
+            min-height: 100dvh;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            font-family: var(--font-literary);
+            color: var(--text);
+            background: var(--body-bg);
         }
 
-        .photo-bg {
-            /* 卡片左侧图片 */
-            background-image: url("./static/images/fbg.jpg");
+        /* 背景图：请换成你自己的图，建议 WebP，宽 1920 以内，200 KB 以内。 */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: -2;
+            background: url("./static/images/bg.webp") 62% 30% / cover no-repeat;
         }
 
-        .kz-video {
-            /* 背景视频，none: 不显示 unset 显示 */
-            display: none; 
+        /* 电脑端左侧加一层很淡的渐变，让卡片和背景过渡更自然 */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: -1;
+            pointer-events: none;
+            background: linear-gradient(90deg, rgba(15, 23, 42, 0.16), rgba(15, 23, 42, 0) 55%);
+        }
+
+        .card {
+            width: min(520px, 100%);
+            margin-left: clamp(0px, 8vw, 140px);
+            padding: 34px 34px 26px;
+            border-radius: 20px;
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            box-shadow: 0 18px 50px rgba(15, 23, 42, 0.22);
+            -webkit-backdrop-filter: blur(14px) saturate(1.2);
+            backdrop-filter: blur(14px) saturate(1.2);
+            animation: rise 0.6s ease both;
+        }
+
+        .head {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .avatar {
+            width: 76px;
+            height: 76px;
+            flex: none;
+            border-radius: 50%;
+            object-fit: cover;
+            background: rgba(255, 255, 255, 0.6);
+            border: 3px solid rgba(255, 255, 255, 0.85);
+            box-shadow: 0 6px 18px rgba(15, 23, 42, 0.2);
+        }
+
+        h1 {
+            margin: 0 0 4px;
+            font-family: var(--font-modern);
+            font-weight: 700;
+            font-size: clamp(1.8rem, 6vw, 2.4rem);
+            letter-spacing: 0.12em;
+            line-height: 1.2;
+            color: var(--accent);
+        }
+
+        .tagline {
+            margin: 0;
+            font-size: 1rem;
+            color: var(--text);
+        }
+
+        .intro {
+            margin: 0;
+            line-height: 1.85;
+            font-size: 0.95rem;
+            color: var(--muted);
+        }
+
+        .links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 24px 0 6px;
+        }
+
+        .btn {
+            flex: 1 1 130px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1.5px solid var(--accent);
+            text-decoration: none;
+            font-family: var(--font-modern);
+            font-weight: 500;
+            color: var(--btn-text);
+            background: var(--accent);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            animation: rise 0.5s ease both;
+            animation-delay: calc(0.2s + var(--i, 0) * 0.07s);
+        }
+
+        .btn svg {
+            width: 18px;
+            height: 18px;
+            flex: none;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .btn.ghost {
+            color: var(--accent);
+            background: transparent;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+
+        .btn:focus-visible {
+            outline: 3px solid var(--accent);
+            outline-offset: 3px;
+        }
+
+        <footer>&copy; 2023-2026 昭鸢笺</footer>
+
+        @keyframes rise {
+            from {
+                opacity: 0;
+                transform: translateY(14px);
+            }
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .card,
+            .btn {
+                animation: none;
+                transition: none;
+            }
+        }
+
+        /* 手机：卡片沉到底部居中，把画面上半部分（人物）让出来 */
+        @media (max-width: 700px) {
+            body {
+                padding: 16px;
+                align-items: flex-end;
+                justify-content: center;
+            }
+
+            body::after {
+                background: linear-gradient(0deg, rgba(15, 23, 42, 0.18), rgba(15, 23, 42, 0) 60%);
+            }
+
+            .card {
+                width: 100%;
+                margin-left: 0;
+                padding: 24px 20px 18px;
+            }
+
+            .avatar {
+                width: 64px;
+                height: 64px;
+            }
+
+            .btn {
+                flex-basis: 100%;
+            }
+        }
+
+        /* === 页面加载动画样式 === */
+        #loading-mask {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            background-color: var(--body-bg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+
+        .loader {
+            display: block;
+            --height-of-loader: 4px;
+            --loader-color: var(--accent);
+            width: 140px;
+            height: var(--height-of-loader);
+            border-radius: 30px;
+            background-color: rgba(128, 128, 128, 0.25);
+            position: relative;
+            margin-bottom: 16px;
+        }
+
+        .loader::before {
+            content: "";
+            position: absolute;
+            background: var(--loader-color);
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            border-radius: 30px;
+            animation: moving 1s ease-in-out infinite;
+        }
+
+        @keyframes moving {
+            50% {
+                width: 100%;
+            }
+            100% {
+                width: 0;
+                right: 0;
+                left: unset;
+            }
+        }
+
+        .loading-text {
+            font-size: 0.85rem;
+            color: var(--muted);
+            font-family: var(--font-literary);
+            letter-spacing: 2px;
+        }
+
+        body.loaded #loading-mask {
+            opacity: 0;
+            visibility: hidden;
         }
     </style>
-    <script>
-        // 音乐设置
-        let meting_music_api = "https://www.kezez.com/api/meting-api/";// meting api
-        let music_server = "netease"; // 音乐服务：网易云 netease 参见 meting api支持的服务
-        let music_type = "playlist"; // 歌曲类型：歌单playlist 单首歌曲 song  专辑 album
-        let music_id = "8362718673"; // 歌单ID或歌曲ID或者专辑ID 20173709 29732992
-        let music_order = "random"; // 音频循环顺序, 顺序播放： 'list', 随机播放：'random'
-        let music_mini = false; // mini模式 吸底模式开启后此选项实效 true / false
-        let music_fixed = false; // 吸底模式
-        let music_volume = 0.7; // 默认音量
-        let music_autoplay = false; // 自动播放
-        let music_loop = "all"; // 音频循环播放, 可选值: 'all', 'one', 'none' ，分别为全部循环，单曲循环，不循环
-
-        // 一言设置
-        let hitokoto_api = "https://v1.hitokoto.cn"; // 一言API
-    </script>
-    <!-- end 自定义设置 -->
 </head>
 
 <body>
-    <div class="kz-video">
-        <video src="./static/video/lty.mp4" autoplay="autoplay" loop muted playsinline="" webkit-playsinline=""></video>
+    <!-- 页面加载动画遮罩 -->
+    <div id="loading-mask">
+        <div class="loader"></div>
+        <div class="loading-text">昭鸢笺 · 笺册渐启…</div>
     </div>
-    <div id="main" class="container">
-        <div class="row my-card justify-content-center">
-            <div class="col-lg-4 photo-bg"></div>
-            <div class="col-lg-8 card">
-                <!-- 大标题 -->
-                <h1>KZHomePage</h1>
-                <!-- 标题下的一段话 -->
-                <p>
-                    很荣幸您能访问我的网站！ 目前我仍在学习中，每天抽出时间来看书学习，励志成为一个技术很牛的程序员。
-                </p>
-                <p id="hitokoto_text">:D 一言获取中...</p>
-                <div class="container-fluid">
-                    <div class="row">
-                        <!-- 导航按钮组 -->
-                        <button data-href="//www.kezez.com" data-title="Blog" data-window="pop" data-anim="4"
-                            data-area-w="80%" data-area-h="90%" data-shade="false"
-                            class="kz-nav-btn btn btn-primary col-lg-4">Blog</button>
 
-                        <button data-href="https://github.com/kaygb/KZHomePage" data-title="GitHub" data-window="newtab"
-                            data-anim="4" data-area-w="80%" data-area-h="90%" data-shade="false"
-                            class="kz-nav-btn btn btn-secondary col-lg-4">GitHub</button>
-
-                        <button data-href="https://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=hi@kezez.com"
-                            data-title="Blog" data-window="pop" data-anim="4" data-area-w="80%" data-area-h="90%"
-                            data-shade="false" class="kz-nav-btn btn btn-success col-lg-4">Send a Mail</button>
-
-                        <!-- end 导航按钮组 -->
-                    </div>
-                </div>
-                <!-- aplayer inner -->
-                <div id="aplayer-inner" class="aplayer"></div>
-                <!-- end aplayer inner -->
-                <ul class="social mt-1">
-                    <li><a href="https://weibo.com/u/5223004318"><i class="fab fa-weibo " aria-hidden="true"></i></a>
-                    </li>
-                    <li><a href="https://github.com/kaygb"><i class="fab fa-github" aria-hidden="true"></i></a></li>
-                    <li><a href="#"><i class="fab fa-telegram" aria-hidden="true"></i></a></li>
-                    <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
-                    <li><a href="https://www.zhihu.com/people/kaygb/"><i class="fab fa-zhihu"
-                                aria-hidden="true"></i></a></li>
-                </ul>
-
-                <footer>
-                    <p>Copyright 2018 - Now <a href="https://www.170601.xyz/" target="_blank">七六零一</a>
-                        <a href="http://beian.miit.gov.cn/" target="_blank">豫ICP备00000000号-1</a>
-                        <br>
-                        <a href="https://github.com/kaygb/KZHomePage" target="_blank" rel="">KZHomePage</a>
-                        Mod by
-                        <a href="https://github.com/kaygb" target="_blank" rel="">kaygb</a>
-                        <br>
-                        <a href="https://console.upyun.com/register/?invite=r1FdZxBoH" target="_blank"
-                            rel="nofollow"><img src="https://bu.dusays.com/2021/12/15/9991d2344d2ca.png"
-                                style="width:50px;"></a>
-                    </p>
-                </footer>
+    <main class="card">
+        <div class="head">
+            <!-- 头像：请放一张 avatar.webp（正方形，256x256 即可）；文件不存在时会自动隐藏 -->
+            <img class="avatar" src="./static/images/avatar.webp" width="76" height="76" alt="昭鸢笺的头像"
+                decoding="async" onerror="this.style.display='none'">
+            <div>
+                <h1>昭鸢笺</h1>
+                <p class="tagline">鸢起云间，一纸笺藏见闻。</p>
             </div>
         </div>
 
-    </div>
+        <p class="intro">
+            昭有明朗向远之意，鸢乘风而上，笺以载笔墨见闻。这里是我的线上手记，记录技术调试的点滴、零散思绪与沿途所见。
+        </p>
 
-    <!-- aplayer -->
-    <div id="aplayer-fixed" class="aplayer"></div>
-    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
-    <script src="./static/APlayer-1.10.1/dist/APlayer.min.js"></script>
-    <script src="./static/Meting.min.js"></script>
-    <!-- end_aplayer -->
-    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
-    <script defer src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <script src="./static/layer-v3.5.1/layer/layer.js"></script>
+        <nav class="links" aria-label="站点链接">
+            <a class="btn" style="--i:0" href="https://blog.mibase.top">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0" />
+                    <path d="M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0" />
+                    <path d="M3 6l0 13" />
+                    <path d="M12 6l0 13" />
+                    <path d="M21 6l0 13" />
+                </svg>
+                博客
+            </a>
+            <a class="btn ghost" style="--i:1" href="https://github.com/miro-box" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M7 8l-4 4l4 4" />
+                    <path d="M17 8l4 4l-4 4" />
+                    <path d="M14 4l-4 16" />
+                </svg>
+                GitHub
+            </a>
+            <a class="btn ghost" style="--i:2" href="mailto:hi@mibase.top">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="3" y="5" width="18" height="14" rx="2" />
+                    <path d="M3 7l9 6l9 -6" />
+                </svg>
+                联系方式
+            </a>
+        </nav>
 
-    <script src="./static/main.js"></script>
+        <footer>&copy; 2023-2026 昭鸢笺</footer>
+    </main>
+
+    <!-- 同步等待页面资源与字体加载完毕后，再淡出遮罩（彻底解决字体加载撕裂感） -->
+    <script>
+        (function() {
+            var pageLoaded = new Promise(function(resolve) {
+                if (document.readyState === 'complete') {
+                    resolve();
+                } else {
+                    window.addEventListener('load', resolve);
+                }
+            });
+
+            var fontLoaded = document.fonts ? document.fonts.ready : Promise.resolve();
+
+            Promise.all([pageLoaded, fontLoaded]).then(function() {
+                setTimeout(function() {
+                    document.body.classList.add('loaded');
+                }, 100);
+            });
+        })();
+    </script>
+</body>
 
 </html>
